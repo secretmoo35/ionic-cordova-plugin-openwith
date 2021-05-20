@@ -4,7 +4,8 @@
 
 ## Overview
 
-This is a bit modified version of [cordova-plugin-openwith](https://github.com/j3k0/cordova-plugin-openwith) by Jean-Christophe Hoelt for iOS.
+This is a bit modified version of [cordova-plugin-openwith](https://github.com/j3k0/cordova-plugin-openwith) by Jean-Christophe Hoelt for iOS. 
+**This fork restores some old code that allows to return base64 with the intent but also changes the fle path so that it has /tmp/ and the resolveLocalFileSystemURL will not throw error code 1 / 3 and will return a valid file entry. Personal Use Only!**
 
 #### Differences:
 
@@ -47,6 +48,7 @@ cordova plugin add cordova-plugin-openwith-ios --variable IOS_URL_SCHEME=cordova
 | variable | example | notes |
 |---|---|---|
 | `IOS_URL_SCHEME` | uniquelonglowercase | Any random long string of lowercase alphabetical characters |
+| `SHAREEXT_MAX_FILE_SIZE` | 20971520 | Maximum file size of shared files to accept (in bytes). Default: 20 MB (20971520 bytes) |
 
 It shouldn't be too hard. But just in case, Jean-Christophe Hoelt [posted a screencast of it](https://youtu.be/eaE4m_xO1mg).
 
@@ -66,7 +68,7 @@ After having installed the plugin, with the ios platform in place, 1 operation n
  1. **make sure that both main app and sharing extension have the same iOS version as deployment target**. 
  Check the General tab -> Deployment info and select the same iOS version for the both targets. 
  This is a necessary step, otherwise the application will not show up in sharing targets.
- 1. just in case, check if the main app and extension have different bundle identifiers. If so, made them unique by adding .shareextension suffix to the latter. The issue might persist during each `cordova prepare` run – it is because currently cordova does not differentiate between main app and app extension and replaces the bundle identifier in both folders. You can avoid this by running the app from xcode – it'd also save you pretty much time, because `cordova run ios` takes much longer. You can also set up you application build to copy the built files from `/www` to `/platfforms/ios/www` so that xcode always have the fresh web application assets. 
+ 1. just in case, check if the main app and extension have different bundle identifiers. If so, made them unique by adding .shareextension suffix to the latter 
  
  1. check the troubleshooting section below if you faced any issues, including signing issues
 
@@ -100,7 +102,7 @@ function setupOpenwith() {
       var item = intent.items[i];
       console.log('  type: ', item.uti);    // UTI. possible values: public.url, public.text or public.image
       console.log('  type: ', item.type);   // Mime type. For example: "image/jpeg"
-      console.log('  data: ', item.data);   // shared data. For text, it is the shared text string. For files, the file's URL on the device file system. You can read it from the webview with cordova-plugin-file or window.Ionic.WebView.convertFileSrc.
+      console.log('  data: ', item.data);   // shared data. For URLs and text - actually the shared URL or text. For image - its base64 string representation.
       console.log('  text: ', item.text);   // text to share alongside the item. as we don't allow user to enter text in native UI, in most cases this will be empty. However for sharing pages from Safari this might contain the title of the shared page.
       console.log('  name: ', item.name);   // suggested name of the image. For instance: "IMG_0404.JPG"
       console.log('  utis: ', item.utis);   // some optional additional info
@@ -111,9 +113,6 @@ function setupOpenwith() {
   }
 }
 ```
-
-Note that since version 2 the plugin to longer passes base64 image representation in data property. 
-This is done because in recent iOS version the share extension started to crash do to excessive memory usage when sharing multiple images or videos. 
 
 ### Controlling sharing file types
 
@@ -170,7 +169,6 @@ A data descriptor describe one file. It is a javascript object with the followin
  - `uti`: Unique Type Identifier. possible values: public.url, public.text or public.image
  - `type`: Mime type. For example: "image/jpeg"
  - `text`: test description of the share, generally empty
- - `data`: the shared text or the path the shared file 
  - `name`: suggested file name
  - `utis`: list of UTIs the file belongs to.
 
