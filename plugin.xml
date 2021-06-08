@@ -23,64 +23,111 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-openwith-ios"
-    version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-openwith" version="1.0.0">
+  <name>OpenWith</name>
+  <description>Cordova "Open With" plugin for Cordova</description>
+  <engines>
+    <engine name="cordova" version=">=6.0.0" />
+  </engines>
+  <repo>https://github.com/missive/cordova-plugin-openwith.git</repo>
+  <issue>https://github.com/missive/cordova-plugin-openwith/issues</issue>
+  <license>MIT</license>
+  <keywords>cordova,phonegap,openwith,ios,android</keywords>
 
-    <name>OpenWith</name>
-	<description>Cordova "Open With" plugin for iOS</description>
-    <engines>
-        <engine name="cordova" version=">=6.0.0" />
-    </engines>
-    <repo>https://github.com/EternallLight/cordova-plugin-openwith-ios.git</repo>
-    <issue>https://github.com/EternallLight/cordova-plugin-openwith-ios/issues</issue>
+  <!-- ios -->
+  <platform name="ios">
+    <preference name="IOS_URL_SCHEME" />
 
-	<license>MIT</license>
-    <keywords>cordova,phonegap,openwith,ios</keywords>
+    <js-module src="www/openwith.js" name="openwith">
+      <clobbers target="cordova.openwith" />
+    </js-module>
 
-    <!-- ios -->
-    <platform name="ios">
-        <preference name="IOS_URL_SCHEME" />
+    <!-- Cordova 2.2 -->
+    <plugins-plist key="OpenWith" string="OpenWith" />
 
-        <js-module src="www/openwith.js" name="openwith">
-            <clobbers target="cordova.openwith" />
-        </js-module>
+    <!-- Cordova 2.5+ -->
+    <config-file target="config.xml" parent="/*">
+      <feature name="OpenWithPlugin">
+        <param name="ios-package" value="OpenWithPlugin" />
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
 
-        <!-- Cordova 2.2 -->
-        <plugins-plist key="OpenWith" string="OpenWith" />
+    <source-file src="src/ios/OpenWithPlugin.m" />
 
-        <!-- Cordova 2.5+ -->
-        <config-file target="config.xml" parent="/*">
-            <feature name="OpenWithPlugin">
-                <param name="ios-package" value="OpenWithPlugin" />
-                <param name="onload" value="true" />
-            </feature>
-        </config-file>
+    <!-- Info.plist -->
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+        <dict>
+          <key>CFBundleURLName</key>
+          <string>$(CFBundleIdentifier).shareextension</string>
+          <key>CFBundleURLSchemes</key>
+          <array>
+            <string>$IOS_URL_SCHEME</string>
+          </array>
+        </dict>
+      </array>
+    </config-file>
 
-        <source-file src="src/ios/OpenWithPlugin.m" />
+    <!-- Entitlements (Debug) -->
+    <config-file target="*-Debug.plist" parent="com.apple.security.application-groups">
+      <array>
+        <string>group.$(CFBundleIdentifier).shareextension</string>
+      </array>
+    </config-file>
 
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-            <array>
-                <dict>
-                    <key>CFBundleURLName</key>
-                    <string>cc.fovea.openwith.$IOS_URL_SCHEME.shareextension</string>
-                    <key>CFBundleURLSchemes</key>
-                    <array>
-                        <string>$IOS_URL_SCHEME</string>
-                    </array>
-                </dict>
-            </array>
-        </config-file>
+    <!-- Entitlements (Release) -->
+    <config-file target="*-Release.plist" parent="com.apple.security.application-groups">
+      <array>
+        <string>group.$(CFBundleIdentifier).shareextension</string>
+      </array>
+    </config-file>
 
-        <hook type="before_plugin_install" src="hooks/npmInstall.js" />
-        <hook type="before_plugin_install" src="hooks/iosCopyShareExtension.js" />
-        <hook type="after_plugin_install" src="hooks/iosAddTarget.js" />
-        <hook type="before_plugin_uninstall" src="hooks/iosRemoveTarget.js" />
+    <!-- Cordova hooks -->
+    <hook type="before_plugin_install" src="hooks/npmInstall.js" />
+    <hook type="after_plugin_install" src="hooks/iosCopyShareExtension.js" />
+    <hook type="after_plugin_add" src="hooks/iosAddTarget.js" />
+    <hook type="after_prepare" src="hooks/iosAddTarget.js" />
 
-        <framework src="MobileCoreServices.framework" />
-    </platform>
-<!--
-vim: ts=4:sw=4:et
--->
+    <!-- Dependencies -->
+    <framework src="MobileCoreServices.framework" />
+  </platform>
+
+  <!-- android -->
+  <platform name="android">
+
+    <preference name="ANDROID_MIME_TYPE" default="*/*"/>
+    <preference name="ANDROID_EXTRA_ACTIONS" default=" " />
+
+    <js-module src="www/openwith.js" name="openwith">
+      <clobbers target="cordova.openwith" />
+    </js-module>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+      <intent-filter>
+        <!-- category android:name="android.intent.category.BROWSABLE" / -->
+        <!-- See https://developer.android.com/guide/topics/manifest/data-element.html -->
+        <data android:mimeType="$ANDROID_MIME_TYPE" />
+        <action android:name="android.intent.action.SEND" />
+        $ANDROID_EXTRA_ACTIONS
+        <!-- action android:name="android.intent.action.VIEW" / -->
+        <!-- action android:name="android.intent.action.SEND_MULTIPLE" / -->
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </config-file>
+
+    <!-- Cordova >= 3.0.0 -->
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="OpenWithPlugin">
+        <param name="android-package" value="com.secretmoo.openwith.OpenWithPlugin" />
+      </feature>
+      <preference name="AndroidLaunchMode" value="singleTask" />
+    </config-file>
+
+    <!-- cordova plugin src files -->
+    <source-file src="src/android/com/secretmoo/openwith/OpenWithPlugin.java" target-dir="src/com/secretmoo/openwith" />
+    <source-file src="src/android/com/secretmoo/openwith/PluginResultSender.java" target-dir="src/com/secretmoo/openwith" />
+    <source-file src="src/android/com/secretmoo/openwith/Serializer.java" target-dir="src/com/secretmoo/openwith" />
+    <source-file src="src/android/com/secretmoo/openwith/ByteStreams.java" target-dir="src/com/secretmoo/openwith" />
+  </platform>
 </plugin>

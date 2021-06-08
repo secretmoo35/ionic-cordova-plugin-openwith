@@ -1,51 +1,50 @@
 {
-  "name": "cordova-plugin-openwith-ios",
-  "version": "2.0.0",
-  "description": "Cordova \"Open With\" plugin for iOS only",
+  "# Dependencies required by the hooks": "",
+  "# Dependencies required to run tests": "",
+  "_from": "git+https://github.com/aeternity/cordova-plugin-openwith.git",
+  "_id": "cordova-plugin-openwith@1.0.3",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-openwith",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/aeternity/cordova-plugin-openwith",
+    "rawSpec": "https://github.com/aeternity/cordova-plugin-openwith",
+    "saveSpec": "git+https://github.com/aeternity/cordova-plugin-openwith.git",
+    "fetchSpec": "https://github.com/aeternity/cordova-plugin-openwith.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/aeternity/cordova-plugin-openwith.git#2901de37137f08cea7dc76c4ac077fe47a318dae",
+  "_spec": "https://github.com/aeternity/cordova-plugin-openwith",
+  "_where": "/Users/sarayutkungsaranuwat/Desktop/INDIGY/03 POC/ionic/open-with",
+  "author": {
+    "name": "Jean-Christophe Hoelt",
+    "email": "hoelt@fovea.cc"
+  },
+  "bugs": {
+    "url": "https://github.com/missive/cordova-plugin-openwith/issues"
+  },
+  "bundleDependencies": false,
   "cordova": {
-    "id": "cordova-plugin-openwith-ios",
+    "id": "cordova-plugin-openwith",
     "platforms": [
       "android",
       "ios"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/EternallLight/cordova-plugin-openwith-ios.git"
-  },
-  "keywords": [
-    "ecosystem:cordova",
-    "cordova-ios",
-    "cordova",
-    "phonegap",
-    "openwith",
-    "ios",
-    "android"
-  ],
-  "scripts": {
-    "test": "npm run js-lint && npm run js-test && npm run java-lint",
-    "install-dev": "./install-pmd",
-    "java-lint": "pmd -minimumpriority 4 -d src/android -R java-basic,java-android,java-braces,java-codesize,java-empty,java-finalizers,java-imports,java-naming,java-optimizations,java-strictexception,java-strings,java-sunsecure,java-typeresolution,java-unnecessary,java-unusedcode -f textcolor",
-    "objc-lint": "true",
-    "js-lint": "eslint www",
-    "js-test": "mocha www",
-    "js-lint-watch": "esw --watch www",
-    "js-test-watch": "mocha --watch www"
-  },
-  "author": "Jean-Christophe Hoelt <hoelt@fovea.cc>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/j3k0/cordova-plugin-openwith/issues"
-  },
-  "homepage": "https://github.com/j3k0/cordova-plugin-openwith",
-  "# Dependencies required by the hooks": "",
   "dependencies": {
     "file-system": "^2.2.2",
     "path": "^0.12.7",
     "plist": "^2.1.0",
-    "xcode": "git+https://github.com/apache/cordova-node-xcode.git"
+    "xcode": "2.0.0"
   },
-  "# Dependencies required to run tests": "",
+  "deprecated": false,
+  "description": "Cordova \"Open With\" plugin for iOS and Android",
   "devDependencies": {
     "eslint": "^4.7.2",
     "eslint-config-google": "^0.9.1",
@@ -59,27 +58,31 @@
     "expect.js": "^0.3.1",
     "mocha": "^3.5.3"
   },
-  "# White list the files to pack by npm publish": "",
-  "files": [
-    "src/android/cc/fovea/openwith/ByteStreams.java",
-    "src/android/cc/fovea/openwith/OpenWithPlugin.java",
-    "src/android/cc/fovea/openwith/PluginResultSender.java",
-    "src/android/cc/fovea/openwith/Serializer.java",
-    "src/ios/OpenWithPlugin.m",
-    "src/ios/ShareExtension/MainInterface.storyboard",
-    "src/ios/ShareExtension/ShareExtension-Info.plist",
-    "src/ios/ShareExtension/ShareViewController.h",
-    "src/ios/ShareExtension/ShareViewController.m",
-    "www/openwith.js",
-    "www/test-openwith.js",
-    "hooks/iosAddTarget.js",
-    "hooks/iosRemoveTarget.js",
-    "hooks/iosCopyShareExtension.js",
-    "hooks/npmInstall.js",
-    "install-pmd",
-    "plugin.xml",
-    "LICENSE",
-    "README.md",
-    "package.json"
-  ]
+  "homepage": "https://github.com/missive/cordova-plugin-openwith",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova",
+    "phonegap",
+    "openwith",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-openwith",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/missive/cordova-plugin-openwith.git"
+  },
+  "scripts": {
+    "install-dev": "./install-pmd",
+    "java-lint": "pmd -minimumpriority 4 -d src/android -R java-basic,java-android,java-braces,java-codesize,java-empty,java-finalizers,java-imports,java-naming,java-optimizations,java-strictexception,java-strings,java-sunsecure,java-typeresolution,java-unnecessary,java-unusedcode -f textcolor",
+    "js-lint": "eslint www",
+    "js-lint-watch": "esw --watch www",
+    "js-test": "mocha www",
+    "js-test-watch": "mocha --watch www",
+    "objc-lint": "true",
+    "test": "npm run js-lint && npm run js-test && npm run java-lint"
+  },
+  "version": "1.0.3"
 }

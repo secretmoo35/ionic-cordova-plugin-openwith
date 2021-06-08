@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-const PLUGIN_ID = "cordova-plugin-openwith-ios";
+const PLUGIN_ID = "cordova-plugin-openwith";
 
 module.exports = function (context) {
     var child_process = require('child_process');
@@ -35,5 +35,3 @@ module.exports = function (context) {
 
     return deferral.promise;
 };
-
-// vim: ts=4:sw=4:et

@@ -240,7 +240,7 @@
                         //Capturing response
                         NSURLRequest* request = [[NSURLRequest alloc] initWithURL:fileUrl];
                         NSData *fileContent = [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
-                        if (fileContent.length > SHAREEXT_MAX_FILE_SIZE) {
+                        if (fileContent.length > 20) {
                             NSString *alertTitle = NSLocalizedString(@"FileSizeErrorTitle", @"Sharing error alert title");
                             NSString *alertMessage = NSLocalizedString(@"FileSizeErrorMessage", @"Sharing error alert message");
 
