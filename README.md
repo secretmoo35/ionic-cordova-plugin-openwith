@@ -48,7 +48,7 @@ cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith 
 
 #### Ionic
 ```
-cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith --variable IOS_URL_SCHEME=openwith --variable ANDROID_MIME_TYPES=*/*
+ionic cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith --variable IOS_URL_SCHEME=openwith --variable ANDROID_MIME_TYPES=*/*
 ```
 
 | variable | example | notes |
