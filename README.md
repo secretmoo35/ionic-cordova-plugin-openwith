@@ -43,12 +43,12 @@ On the Cordova App side, the plugin checks listens for app start or resume event
 Here's the promised one liner:
 #### Corodva
 ```
-cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith --variable IOS_URL_SCHEME=openwith --variable ANDROID_MIME_TYPES=*/*
+cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith --variable IOS_URL_SCHEME=openwith --variable ANDROID_MIME_TYPES="*/*"
 ```
 
 #### Ionic
 ```
-ionic cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith --variable IOS_URL_SCHEME=openwith --variable ANDROID_MIME_TYPES=*/*
+ionic cordova plugin add https://github.com/secretmoo35/ionic-cordova-plugin-openwith --variable IOS_URL_SCHEME=openwith --variable ANDROID_MIME_TYPES="*/*"
 ```
 
 | variable | example | notes |
